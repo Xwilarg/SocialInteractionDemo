@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.D)) x = 1;
         var axis2D = (new Vector2(transform.forward.x, transform.forward.z) * y) + (new Vector2(transform.right.x, transform.right.z) * x);
         axis2D.Normalize();
-        _rb.velocity = new Vector3(axis2D.x, _rb.velocity.y, axis2D.y);
+        _rb.velocity = new Vector3(axis2D.x * _speed, _rb.velocity.y, axis2D.y * _speed);
 
         float rotX = Input.GetAxis("Mouse X");
         float rotY = Input.GetAxis("Mouse Y");
