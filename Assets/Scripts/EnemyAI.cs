@@ -4,16 +4,18 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     private NavMeshAgent _agent;
-    private Transform _player;
+    private Transform _heart;
 
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
+        _heart = GameObject.FindGameObjectWithTag("Heart").transform;
+        _agent.SetDestination(_heart.transform.position);
     }
 
-    private void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        _agent.SetDestination(_player.transform.position);
+        GameManager.S.TakeDamage();
+        Destroy(gameObject);
     }
 }
