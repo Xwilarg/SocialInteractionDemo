@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 
     private const float _shootForce = 50f;
 
+    private const float _timerBetweenShootRef = .5f;
+    private float _timerBetweenShoot = 0f;
+
     [SerializeField]
     private GameObject _bulletPrefab, _gunEnd;
 
@@ -36,10 +39,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        _timerBetweenShoot -= Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(0) && _timerBetweenShoot <= 0f)
         {
             var bullet = Instantiate(_bulletPrefab, _gunEnd.transform.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody>().AddForce(transform.forward * _shootForce, ForceMode.Impulse);
+            Destroy(bullet, 5f);
+            _timerBetweenShoot = _timerBetweenShootRef;
         }
     }
 }
