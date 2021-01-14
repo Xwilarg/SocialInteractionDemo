@@ -15,7 +15,14 @@ public class EnemyAI : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        GameManager.S.TakeDamage();
-        Destroy(gameObject);
+        if (collision.collider.CompareTag("Heart"))
+        {
+            GameManager.S.TakeDamage();
+            Destroy(gameObject);
+        }
+        else if (collision.collider.CompareTag("Bullet"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

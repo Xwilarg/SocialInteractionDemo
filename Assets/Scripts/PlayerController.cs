@@ -7,6 +7,11 @@ public class PlayerController : MonoBehaviour
     private const float _sensibilityX = 2f;
     private const float _sensibilityY = 2f;
 
+    private const float _shootForce = 50f;
+
+    [SerializeField]
+    private GameObject _bulletPrefab, _gunEnd;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -27,5 +32,14 @@ public class PlayerController : MonoBehaviour
         float rotY = Input.GetAxis("Mouse Y");
         transform.Rotate(rotX * Vector3.up * _sensibilityY);
         Camera.main.transform.Rotate(rotY * Vector3.left * _sensibilityX);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var bullet = Instantiate(_bulletPrefab, _gunEnd.transform.position, Quaternion.identity);
+            bullet.GetComponent<Rigidbody>().AddForce(transform.forward * _shootForce, ForceMode.Impulse);
+        }
     }
 }
