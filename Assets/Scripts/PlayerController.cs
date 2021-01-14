@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,12 +14,29 @@ public class PlayerController : MonoBehaviour
     private const float _timerBetweenShootRef = .5f;
     private float _timerBetweenShoot = 0f;
 
+    private float _baseHealthUISize;
+
+    [SerializeField]
+    private RectTransform _healthUI;
+
+    [SerializeField]
+    private Text _ammoText;
+
     [SerializeField]
     private GameObject _bulletPrefab, _gunEnd;
 
+    private int _nbAmmo;
+    private const int _refNbAmmo = 15;
+
+    private bool _isReloading = false;
+    private const float _gunReloadTime = 3f;
+
     private void Start()
     {
+        _nbAmmo = _refNbAmmo;
+        _ammoText.text = _nbAmmo + " / ∞";
         _rb = GetComponent<Rigidbody>();
+        _baseHealthUISize = _healthUI.sizeDelta.x;
     }
 
     private void FixedUpdate()
@@ -41,12 +60,29 @@ public class PlayerController : MonoBehaviour
     {
         _timerBetweenShoot -= Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && _timerBetweenShoot <= 0f)
+        if (Input.GetMouseButtonDown(0) && _timerBetweenShoot <= 0f && !_isReloading)
         {
             var bullet = Instantiate(_bulletPrefab, _gunEnd.transform.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody>().AddForce(transform.forward * _shootForce, ForceMode.Impulse);
             Destroy(bullet, 5f);
             _timerBetweenShoot = _timerBetweenShootRef;
+            _nbAmmo--;
+            if (_nbAmmo == 0)
+            {
+                _ammoText.text = "Reloading...";
+                _isReloading = true;
+                StartCoroutine(Reload());
+            }
+            else
+                _ammoText.text = _nbAmmo + " / ∞";
         }
+    }
+
+    private IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(_gunReloadTime);
+        _isReloading = false;
+        _nbAmmo = _refNbAmmo;
+        _ammoText.text = _nbAmmo + " / ∞";
     }
 }
