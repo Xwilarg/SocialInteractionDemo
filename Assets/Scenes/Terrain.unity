@@ -757,6 +757,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 158464588827192045, guid: aa48257be3f8d76419299d76697709df, type: 3}
+      propertyPath: _ammoText
+      value: 
+      objectReference: {fileID: 202919787}
+    - target: {fileID: 158464588827192045, guid: aa48257be3f8d76419299d76697709df, type: 3}
+      propertyPath: _healthUI
+      value: 
+      objectReference: {fileID: 1967095236}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa48257be3f8d76419299d76697709df, type: 3}
 --- !u!1 &1051457178
@@ -896,7 +904,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!223 &1174614887
 Canvas:
   m_ObjectHideFlags: 0
@@ -1395,7 +1402,6 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1499056689
