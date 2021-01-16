@@ -8,6 +8,9 @@ public class GodController : MonoBehaviour
     [SerializeField]
     private Image _spell1, _spell2, _spell3, _spell4;
 
+    [SerializeField]
+    private GameObject _slowZone;
+
     private void RemoveAllSpells()
     {
         _spell1.color = Color.white;
@@ -41,6 +44,15 @@ public class GodController : MonoBehaviour
             RemoveAllSpells();
             _currentSlot = 4;
             _spell4.color = Color.grey;
+        }
+
+        if (Input.GetMouseButtonDown(0) && _currentSlot != 0)
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = 0f;
+            var pos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            //Destroy(Instantiate(_slowZone, pos, Quaternion.identity), 10f);
         }
     }
 }
